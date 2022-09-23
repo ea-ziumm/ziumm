@@ -1,8 +1,8 @@
-(function write(){
+(function(){
   const spanEl = document.querySelector("main h2 span");
-  const txtArr = [' Web Publlisher', ' Front-End Developer', ' Web UI Designer'];
+  const txtArr = [' Web Publisher', ' Front-End Developer', ' Web Designer'];
   let index = 0;
-  let currentTxt = txtArr[index].split("");
+  let currentTxt =txtArr[index].split("");
   function writeTxt(){
     spanEl.textContent += currentTxt.shift();
     if(currentTxt.length !== 0){
@@ -18,7 +18,7 @@
     if(currentTxt.length !== 0){
       setTimeout(deleteTxt, Math.floor(Math.random() * 100))
     }else{
-      index = (index + 1) % txtArr.length();
+      index = (index + 1) % txtArr.length;
       currentTxt = txtArr[index].split("");
       writeTxt();
     }
@@ -27,7 +27,7 @@
 })();
 const headerEl = document.querySelector("header");
 window.addEventListener('scroll', function(){
-  requestAnimationFrame(scrollCheck);
+  this.requestAnimationFrame(scrollCheck);
 });
 function scrollCheck(){
   let browerScrollY = window.scrollY ? window.scrollY : window.pageYOffset;
@@ -36,4 +36,17 @@ function scrollCheck(){
   }else{
     headerEl.classList.remove("active");
   }
+}
+const animationMove = function(selector){
+  const targetEl = document.querySelector(selector);
+  const browserScrollY = window.pageYOffset;
+  const targetScrollY = targetEl.getBoundingClientRect().top + browserScrollY;
+  window.scrollTo({top : targetScrollY, behavior : 'smooth'});
+}
+const scrollMoveEl = document.querySelectorAll("[data-animation-scroll='true']");
+for(let i = 0; i < scrollMoveEl.length; i++){
+  scrollMoveEl[i].addEventListener('click', function(e){
+    const target = this.dataset.target;
+    animationMove(target);
+  });
 }
